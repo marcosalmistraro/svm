@@ -19,6 +19,7 @@ prediction = predict({X, Y, 'f', gam, sig2}, Xs, nb);
 
 mae = mean(abs(prediction-Ztest));
 
+% Display results
 figure;
 hold on;
 plot(Ztest, 'k');

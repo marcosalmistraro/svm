@@ -19,6 +19,7 @@ prediction = predict({X, Y, 'f', gam, sig2}, Xs, nb);
 
 mae = mean(abs(prediction-Ztest));
 
+% Display results
 figure;
 hold on;
 plot(Ztest, 'k');
@@ -26,5 +27,3 @@ plot(prediction, 'r');
 legend('Test Set', 'Predicted')
 title(sprintf('Logmap dataset, gam=%s, sig2=%s, MAE=%s', num2str(gam), num2str(sig2), num2str(mae)));
 hold off;
-
-
