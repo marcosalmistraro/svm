@@ -9,9 +9,7 @@ Ntest=size(Xtest1,1);
 minx=min(min(X)); 
 maxx=max(max(X));
 
-%
 % Add noise to the digit maps
-%
 
 noisefactor =0.3;
 
@@ -29,52 +27,44 @@ for i=1:size(Xtest1,1);
   Xnt(i,:) = Xtest1(i,:) + noise*randn(1,dim);
 end
 
-%
-% select training set
-%
+% Select training set
+
 Xtr = X(1:1:end,:);
-
 sig2 =dim*mean(var(Xtr)); % rule of thumb
-
 sigmafactor = 0.7;
-
 sig2=sig2*sigmafactor;
 
-%
-% kernel based Principal Component Analysis 
+% Kernel-based Principal Component Analysis 
 % using the original training data
-%
 
 disp('Kernel PCA: extract the principal eigenvectors in feature space');
 disp(['sig2 = ', num2str(sig2)]);
 
-% linear PCA
+% Linear PCA
 [lam_lin,U_lin] = pca(Xtr);
 
-% kernel PCA
+% Kernel PCA
 [lam,U] = kpca(Xtr,'RBF_kernel',sig2,[],'eig',240); 
 [lam, ids]=sort(-lam); lam = -lam; U=U(:,ids);
 
-%
 % Denoise using the first principal components
-%
-disp(' ');
-disp(' Denoise using the first PCs');
 
-% choose the digits for test
+disp('Denoise using the first PCs');
+
+% Choose the digits for the test
+
 digs=[0:9]; ndig=length(digs);
 m=2; % Choose the m-th datapoint for each digit 
 
 Xdt=zeros(ndig,dim);
 
-%
-% figure of all digits
-%
+% Displaying all digits
+
 figure; 
 colormap('gray'); 
 title('Denosing using linear PCA'); tic
 
-% which number of eigenvalues of kpca
+% Select number of eigenvalues for kpca
 npcs = [2.^(0:7) 190];
 lpcs = length(npcs);
 
@@ -105,14 +95,12 @@ for k=1:lpcs;
    set(gca,'xticklabel',[]);set(gca,'yticklabel',[]);           
    if i==1, ylabel(['n=',num2str(nb_pcs)]); end
    drawnow    
- end % for i
-end % for k
+ end
+end
 
-%
-% denosing using Linear PCA for comparison
-%
+% Denosing using Linear PCA for comparison
 
-% which number of eigenvalues of pca
+% Select number of eigenvalues for pca
 npcs = [2.^(0:7) 190];
 lpcs = length(npcs);
 
@@ -142,5 +130,5 @@ for k=1:lpcs;
     pcolor(1:15,16:-1:1,reshape(Xdt_lin(i,:), 15, 16)'); shading interp; 
     set(gca,'xticklabel',[]);set(gca,'yticklabel',[]);        
     if i==1, ylabel(['n=',num2str(nb_pcs)]), end
- end % for i
-end % for k
+ end
+end

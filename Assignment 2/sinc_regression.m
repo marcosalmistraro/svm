@@ -1,4 +1,5 @@
 %% Regression of the sinc function using LSSVM
+
 X = (-3:0.01:3)';
 Y = sinc(X)+0.1.*randn(length(X),1);
 
@@ -7,7 +8,7 @@ Ytrain = Y(1:2:end);
 Xtest = X(2:2:end);
 Ytest = Y(2:2:end);
 
-% modify the following parameters to evaluate effects
+% Modify the following parameters to evaluate effects
 gam = 100; % 10, 100
 sig2 = 5; % 0.1, 1
 [alpha,b] = trainlssvm({Xtrain,Ytrain,'f',gam,sig2,'RBF_kernel'});
@@ -23,6 +24,6 @@ plot(Xtest,YtestEst,'r-+', 'LineWidth', 1);
 legend('Real values','Estimation');
 title('Sinc function regression, gam=100, sig2=5');
 
-% plot MSE on the test set
+% Plot MSE on the test set
 mse = mean((Ytest - YtestEst).^2);
 disp(mse)

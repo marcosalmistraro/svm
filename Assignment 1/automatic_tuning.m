@@ -1,3 +1,5 @@
+% Simple script for showing automatic tuning on a LSSVM alogrithm
+
 load iris
 
 model = {X,Y,'c',[],[],'RBF_kernel','ds'}; % csa vs ds
